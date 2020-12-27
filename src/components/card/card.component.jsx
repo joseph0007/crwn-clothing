@@ -3,8 +3,8 @@ import "./card.styles.scss";
 
 const Card = ({ title, key, imageUrl, size, linkUrl, history, match }) => {
   let newSize = size ? size : "";
-  console.log(linkUrl);
   return (
+    // <Link to={`${match.url}${linkUrl}`} />
     <div className={`card ${newSize}`} key={key}>
       <div
         className="card__background"
@@ -16,7 +16,6 @@ const Card = ({ title, key, imageUrl, size, linkUrl, history, match }) => {
         <h1 className="card__title">{title}</h1>
         <span className="card__subtitle">shop now!</span>
       </div>
-      <Link to={`${match.url}${linkUrl}`}>{title}</Link>
     </div>
   );
 };

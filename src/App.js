@@ -1,7 +1,11 @@
+import React from "react";
 import "./App.css";
 import { HomePage } from "./pages/homepage/homepage.page.jsx";
 import Shop from "./pages/shoppage/shoppage.page";
 import { Route, Switch } from "react-router-dom";
+import Header from "./components/header/header.component";
+import SignInPage from "./pages/signpage/signpage.component";
+import { auth } from "./utils/firebase/firebase.utils";
 
 /**
  * a common issue with client side rendering was the issue of routing as opposed to server side rendering where we render the
@@ -24,15 +28,40 @@ const Hats = (props) => (
  *
  */
 
-function App() {
-  return (
-    <div className="App">
-      <Switch>
-        <Route path="/shop" component={Shop} />
-        <Route exact path="/" component={HomePage} />
-      </Switch>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      userState: null,
+    };
+  }
+
+  unsubscribeFromAuth = null;
+
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+      this.setState({ userState: user });
+      console.log(user);
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/shop" component={Shop} />
+          <Route path="/signin" component={SignInPage} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;
