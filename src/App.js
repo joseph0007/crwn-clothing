@@ -5,7 +5,7 @@ import Shop from "./pages/shoppage/shoppage.page";
 import { Route, Switch } from "react-router-dom";
 import Header from "./components/header/header.component";
 import SignInPage from "./pages/signpage/signpage.component";
-import { auth } from "./utils/firebase/firebase.utils";
+import { auth, createUserDocDB } from "./utils/firebase/firebase.utils";
 
 /**
  * a common issue with client side rendering was the issue of routing as opposed to server side rendering where we render the
@@ -33,16 +33,34 @@ class App extends React.Component {
     super();
 
     this.state = {
-      userState: null,
+      currentUser: null,
     };
   }
 
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ userState: user });
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        // create new user
+        const userDocRef = await createUserDocDB(user);
+
+        // using the snapShot method which gives us both the data and the id
+        // we can call the data() method on the docRef to get the data in the JSON format and the id can be
+        // found on the snapShot object!!
+        userDocRef.onSnapshot((snapShot) => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(),
+            },
+          });
+        });
+      } else {
+        this.setState({
+          currentUser: user,
+        });
+      }
     });
   }
 
@@ -53,7 +71,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header currentUser={this.state.currentUser} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={Shop} />
