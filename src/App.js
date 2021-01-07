@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import "./App.css";
 import { HomePage } from "./pages/homepage/homepage.page.jsx";
 import Shop from "./pages/shoppage/shoppage.page";
@@ -6,6 +8,7 @@ import { Route, Switch } from "react-router-dom";
 import Header from "./components/header/header.component";
 import SignInPage from "./pages/signpage/signpage.component";
 import { auth, createUserDocDB } from "./utils/firebase/firebase.utils";
+import setCurrentUser from "./redux/users/users.actions";
 
 /**
  * a common issue with client side rendering was the issue of routing as opposed to server side rendering where we render the
@@ -41,6 +44,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
+      const { setCurrentUser } = this.props;
+
       if (user) {
         // create new user
         const userDocRef = await createUserDocDB(user);
@@ -49,17 +54,24 @@ class App extends React.Component {
         // we can call the data() method on the docRef to get the data in the JSON format and the id can be
         // found on the snapShot object!!
         userDocRef.onSnapshot((snapShot) => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data(),
-            },
+          // this.setState(
+          //   {
+          //     currentUser: {
+          //       id: snapShot.id,
+          //       ...snapShot.data(),
+          //     },
+          //   },
+          //   () => {
+          //     console.log(this.state);
+          //   }
+          // );
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
           });
         });
       } else {
-        this.setState({
-          currentUser: user,
-        });
+        setCurrentUser(user);
       }
     });
   }
@@ -71,7 +83,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header currentUser={this.state.currentUser} />
+        {/* <Header currentUser={this.state.currentUser} /> */}
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={Shop} />
@@ -82,4 +95,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(App);

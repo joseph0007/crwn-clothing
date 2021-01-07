@@ -27,7 +27,7 @@ export const createUserDocDB = async (userAuth, additionalData) => {
 
   const userSnap = await userRef.get();
 
-  console.log(userRef, userSnap);
+  // console.log(userRef, userSnap);
 
   // if not then create new user
   if (!userSnap.exists) {

@@ -22,16 +22,23 @@ class SignUp extends React.Component {
 
     const { name, email, password, confirmPassword } = this.state;
 
+    // check for password correction
     if (password !== confirmPassword) {
       return alert("password and confirm paswword dont match!!");
     }
 
     try {
-      const { user } = await auth.createUserWithEmailAndPassword(
+      // use firebase method to create a new user with email and password
+      const userObj = await auth.createUserWithEmailAndPassword(
         email,
         password
       );
 
+      console.log(userObj);
+      const { user } = userObj;
+
+      // the reason why we create a document over here and not let the onAuthStateChange method take care of it is because
+      // we want to set the displayName property which is by default set to null in the "user" object!!!
       await createUserDocDB(user, { displayName: name });
 
       this.setState({
@@ -67,6 +74,7 @@ class SignUp extends React.Component {
             value={this.state.name}
             type="text"
             id="name-2"
+            required
           />
           <FormInput
             label="email"
@@ -75,6 +83,7 @@ class SignUp extends React.Component {
             handleChange={this.handleChange}
             value={this.state.email}
             id="email-2"
+            required
           />
           <FormInput
             label="password"
@@ -83,6 +92,7 @@ class SignUp extends React.Component {
             handleChange={this.handleChange}
             value={this.state.password}
             id="password-2"
+            required
           />
           <FormInput
             label="confirm password"
@@ -91,6 +101,7 @@ class SignUp extends React.Component {
             handleChange={this.handleChange}
             value={this.state.confirmPassword}
             id="confirmPassword-2"
+            required
           />
 
           <CustomButton>Sign Up</CustomButton>
