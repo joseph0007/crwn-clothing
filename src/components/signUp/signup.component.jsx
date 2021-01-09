@@ -34,7 +34,6 @@ class SignUp extends React.Component {
         password
       );
 
-      console.log(userObj);
       const { user } = userObj;
 
       // the reason why we create a document over here and not let the onAuthStateChange method take care of it is because

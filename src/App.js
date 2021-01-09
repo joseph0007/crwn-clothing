@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import "./App.css";
 import { HomePage } from "./pages/homepage/homepage.page.jsx";
 import Shop from "./pages/shoppage/shoppage.page";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/header/header.component";
 import SignInPage from "./pages/signpage/signpage.component";
 import { auth, createUserDocDB } from "./utils/firebase/firebase.utils";
@@ -18,12 +18,12 @@ import setCurrentUser from "./redux/users/users.actions";
  * but this issue was solved with client side routing which useses something that was build into the browser to route!!
  */
 
-const Hats = (props) => (
-  <div>
-    {console.log(props)}
-    <h1>Hats</h1>
-  </div>
-);
+// const Hats = (props) => (
+//   <div>
+//     {console.log(props)}
+//     <h1>Hats</h1>
+//   </div>
+// );
 
 /**
  * Switch component just checks for the route inside of it and renders the first component that matches the url endpoint and ignores the
@@ -32,13 +32,13 @@ const Hats = (props) => (
  */
 
 class App extends React.Component {
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
 
-    this.state = {
-      currentUser: null,
-    };
-  }
+  //   this.state = {
+  //     currentUser: null,
+  //   };
+  // }
 
   unsubscribeFromAuth = null;
 
@@ -88,15 +88,30 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={Shop} />
-          <Route path="/signin" component={SignInPage} />
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              this.props.currentUser ? (
+                <Redirect to="/"></Redirect>
+              ) : (
+                <SignInPage />
+              )
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
 
+// subscriber function: constantly listens for any change!!(like an event Listener)
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
