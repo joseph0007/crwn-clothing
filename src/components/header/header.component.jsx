@@ -1,10 +1,14 @@
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+
 import "./header.styles.scss";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import { auth } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../cartIcon/carticon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import { selectHidden } from "../../redux/cart/cart.selectors";
+import { selectCurrentUser } from "../../redux/users/users.selectors";
 
 const Header = ({ currentUser, cartVisibility }) => (
   <div className="header">
@@ -40,12 +44,11 @@ const Header = ({ currentUser, cartVisibility }) => (
 );
 // this is the pattern or way we follow to pass state data to components using redux and hence we dont need to worry about
 // props drilling!!
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.user.currentUser,
-    cartVisibility: state.cart.hidden,
-  };
-};
+// createStructuredSelector passes the state data implicitly and so we dont need to worry about passing it every time.
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  cartVisibility: selectHidden,
+});
 
 // higher order functions in react are functions that recieve a Component and returns a modified Component
 export default connect(mapStateToProps)(Header);

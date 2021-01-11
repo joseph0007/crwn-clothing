@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { withRouter } from "react-router-dom";
 
 import "./App.css";
 import { HomePage } from "./pages/homepage/homepage.page.jsx";
@@ -7,8 +9,10 @@ import Shop from "./pages/shoppage/shoppage.page";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/header/header.component";
 import SignInPage from "./pages/signpage/signpage.component";
+import CheckOut from "./pages/checkout/checkout.pages";
 import { auth, createUserDocDB } from "./utils/firebase/firebase.utils";
 import setCurrentUser from "./redux/users/users.actions";
+import { selectCurrentUser } from "./redux/users/users.selectors";
 
 /**
  * a common issue with client side rendering was the issue of routing as opposed to server side rendering where we render the
@@ -83,11 +87,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        {/* {console.log(this.props)} */}
         {/* <Header currentUser={this.state.currentUser} /> */}
         <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={Shop} />
+          <Route exact path="/checkout" component={CheckOut} />
           <Route
             exact
             path="/signin"
@@ -106,12 +112,12 @@ class App extends React.Component {
 }
 
 // subscriber function: constantly listens for any change!!(like an event Listener)
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

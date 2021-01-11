@@ -11,6 +11,12 @@
   right: 0px;
   z-index: 5;
 
+  .empty-message {
+    text-align: center;
+    text-transform: capitalize;
+    margin-top: 2rem;
+  }
+
   .cart-items {
     height: 240px;
     display: flex;
