@@ -13,6 +13,13 @@ export const addCartItem = (item) => {
   };
 };
 
+export const reduceCartItem = (item) => {
+  return {
+    type: cartTypes.REDUCE_CART_ITEM,
+    payload: item,
+  };
+};
+
 export const removeCartItem = (item) => {
   return {
     type: cartTypes.CLEAR_CART_ITEM,
