@@ -1,11 +1,15 @@
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import "./card.styles.scss";
 
 const Card = ({ title, key, imageUrl, size, linkUrl, history, match }) => {
   let newSize = size ? size : "";
   return (
     // <Link to={`${match.url}${linkUrl}`} />
-    <div className={`card ${newSize}`} key={key}>
+    <div
+      className={`card ${newSize}`}
+      key={key}
+      onClick={() => history.push(`${linkUrl}`)}
+    >
       <div
         className="card__background"
         style={{
