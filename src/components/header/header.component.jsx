@@ -1,8 +1,15 @@
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import "./header.styles.scss";
-import { Link } from "react-router-dom";
+// import "./header.styles.scss";
+// import { Link } from "react-router-dom";
+import {
+  HeaderContainer,
+  OptionLink,
+  OptionsContainer,
+  LogoContainer,
+} from "./header.styles";
+
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import { auth } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../cartIcon/carticon.component";
@@ -11,36 +18,31 @@ import { selectHidden } from "../../redux/cart/cart.selectors";
 import { selectCurrentUser } from "../../redux/users/users.selectors";
 
 const Header = ({ currentUser, cartVisibility }) => (
-  <div className="header">
-    <Link to="/">
-      <Logo />
-    </Link>
+  <HeaderContainer>
+    <LogoContainer to="/">
+      <Logo className="logo" />
+    </LogoContainer>
 
-    <div className="options">
-      <Link to="/shop" className="option">
-        Shop
-      </Link>
-      <Link to="/contacts" className="option">
-        contacts
-      </Link>
+    <OptionsContainer>
+      <OptionLink to="/shop">Shop</OptionLink>
+      <OptionLink to="/contacts">contacts</OptionLink>
       {currentUser ? (
-        <div
-          className="option"
+        <OptionLink
+          // the as prop allows us to change the html element (styled-components)
+          as="div"
           onClick={() => auth.signOut()}
           style={{ cursor: "pointer" }}
         >
           Sign out
-        </div>
+        </OptionLink>
       ) : (
-        <Link className="option" to="/signin">
-          Sign in
-        </Link>
+        <OptionLink to="/signin">Sign in</OptionLink>
       )}
       <CartIcon />
-    </div>
+    </OptionsContainer>
 
     {cartVisibility ? <CartDropdown /> : ""}
-  </div>
+  </HeaderContainer>
 );
 // this is the pattern or way we follow to pass state data to components using redux and hence we dont need to worry about
 // props drilling!!
