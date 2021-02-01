@@ -50,6 +50,29 @@ export const createUserDocDB = async (userAuth, additionalData) => {
   return userRef;
 };
 
+// fetching shop data
+export const fetchShopData = (shopDataRef) => {
+  const transformedSopData = shopDataRef.docs.map((el) => {
+    const { title, items } = el.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      items,
+      title,
+      id: el.id,
+    };
+  });
+
+  // converting/normalizing array to object using reduce (very cool)
+  return transformedSopData.reduce((acc, el) => {
+    acc[el.title.toLowerCase()] = el;
+
+    return acc;
+  }, {});
+
+  // console.log(transformedSopData);
+};
+
 export const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 

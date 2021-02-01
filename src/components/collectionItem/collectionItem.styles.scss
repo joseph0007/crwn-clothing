@@ -31,7 +31,7 @@
     }
   }
 
-  .custom-button {
+  button {
     position: absolute;
     top: 255px;
     opacity: 0.85;
@@ -39,7 +39,7 @@
   }
 
   &:hover {
-    .custom-button {
+    button {
       display: block;
     }
 

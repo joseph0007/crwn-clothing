@@ -8,9 +8,11 @@ export const selectShopItems = createSelector(
   (shop) => shop.shop_data
 );
 
-export const selectShopItemsArr = createSelector([selectShop], (shop) =>
-  Object.keys(shop.shop_data).map((key) => shop.shop_data[key])
-);
+export const selectShopItemsArr = createSelector([selectShop], (shop) => {
+  return shop.shop_data
+    ? Object.keys(shop.shop_data).map((key) => shop.shop_data[key])
+    : [];
+});
 
 /**
  * One quick addition, our selectCategory function we just wrote is not memoized due to categoryUrlParam being passed in from
@@ -27,4 +29,14 @@ export const selectShopItemsArr = createSelector([selectShop], (shop) =>
 export const selectCategory = memoize((categoryUrlParams) =>
   // we normalised the shop_data from an array to an object so that we can efficiently find the data without performance issue!!
   createSelector([selectShopItems], (shop_data) => shop_data[categoryUrlParams])
+);
+
+export const selectIsFetching = createSelector(
+  [selectShop],
+  (shop) => shop.isFetching
+);
+
+export const isShopDataLoaded = createSelector(
+  [selectShop],
+  (shop) => !!shop.shop_data
 );

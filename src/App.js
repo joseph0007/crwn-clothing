@@ -41,6 +41,9 @@ class App extends React.Component {
 
   //   this.state = {
   //     currentUser: null,
+  //     // is used to get access to the actualDOM element (ref.current)
+  //     // ref={this.state.ref} should be passed into the element that you want the reference of !!
+  //     ref: React.createRef(),
   //   };
   // }
 
@@ -87,6 +90,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        {/* {console.log(this.state.ref)} */}
         {/* {console.log(this.props)} */}
         {/* <Header currentUser={this.state.currentUser} /> */}
         <Header />

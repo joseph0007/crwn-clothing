@@ -10,6 +10,8 @@ import { persistor } from "./redux/store";
 
 import store from "./redux/store";
 
+// process.env.NODE_ENV = "development";
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
