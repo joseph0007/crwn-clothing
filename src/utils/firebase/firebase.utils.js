@@ -73,10 +73,20 @@ export const fetchShopData = (shopDataRef) => {
   // console.log(transformedSopData);
 };
 
-export const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
+/* --------------------------- return user object --------------------------- */
+export const userRef = () =>
+  new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      unsubscribe();
+      resolve(authUser);
+    }, reject);
+  });
 
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+// google authentication popup
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: "select_account" });
+
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;
 

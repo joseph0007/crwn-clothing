@@ -16,8 +16,9 @@ import CartIcon from "../cartIcon/carticon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import { selectHidden } from "../../redux/cart/cart.selectors";
 import { selectCurrentUser } from "../../redux/users/users.selectors";
+import { userLogoutStart } from "../../redux/users/users.actions";
 
-const Header = ({ currentUser, cartVisibility }) => (
+const Header = ({ currentUser, cartVisibility, userLogout }) => (
   <HeaderContainer>
     <LogoContainer to="/">
       <Logo className="logo" />
@@ -30,7 +31,7 @@ const Header = ({ currentUser, cartVisibility }) => (
         <OptionLink
           // the as prop allows us to change the html element (styled-components)
           as="div"
-          onClick={() => auth.signOut()}
+          onClick={userLogout}
           style={{ cursor: "pointer" }}
         >
           Sign out
@@ -52,5 +53,9 @@ const mapStateToProps = createStructuredSelector({
   cartVisibility: selectHidden,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  userLogout: () => dispatch(userLogoutStart()),
+});
+
 // higher order functions in react are functions that recieve a Component and returns a modified Component
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

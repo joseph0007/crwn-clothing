@@ -1,3 +1,4 @@
+import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -35,4 +36,6 @@ const mapStateToProps = (state) => {
 
 // when you dont pass amapDispatchToProps method then redux automatically passes a dispatch method in the props of the function so
 // that it can be used inside the Component to dispatch any action :)
-export default withRouter(connect(mapStateToProps)(CartDropdown));
+export default compose(connect(mapStateToProps), withRouter)(CartDropdown);
+
+// withRouter(connect(mapStateToProps)(CartDropdown));

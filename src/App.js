@@ -11,7 +11,7 @@ import Header from "./components/header/header.component";
 import SignInPage from "./pages/signpage/signpage.component";
 import CheckOut from "./pages/checkout/checkout.pages";
 import { auth, createUserDocDB } from "./utils/firebase/firebase.utils";
-import setCurrentUser from "./redux/users/users.actions";
+import { checkUserAuthStateStart } from "./redux/users/users.actions";
 import { selectCurrentUser } from "./redux/users/users.selectors";
 
 /**
@@ -50,37 +50,9 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
-      const { setCurrentUser } = this.props;
+    const { checkUserAuthState } = this.props;
 
-      if (user) {
-        // create new user
-        const userDocRef = await createUserDocDB(user);
-
-        // using the snapShot method which gives us both the data and the id
-        // we can call the data() method on the docRef to get the data in the JSON format and the id can be
-        // found on the snapShot object!!
-        userDocRef.onSnapshot((snapShot) => {
-          // this.setState(
-          //   {
-          //     currentUser: {
-          //       id: snapShot.id,
-          //       ...snapShot.data(),
-          //     },
-          //   },
-          //   () => {
-          //     console.log(this.state);
-          //   }
-          // );
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          });
-        });
-      } else {
-        setCurrentUser(user);
-      }
-    });
+    checkUserAuthState();
   }
 
   componentWillUnmount() {
@@ -120,8 +92,11 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
+// ownProps is the props that are passed to the element when it is called somewhere!!
+// react-redux re-renders the component when the new props are passed and the ownProps is passed as second argument to
+// mapDispatchToProps function!! but it will not re-render even if props change when ownProps is not passed!
 const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  checkUserAuthState: () => dispatch(checkUserAuthStateStart()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

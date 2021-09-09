@@ -12,7 +12,8 @@ import { connect } from "react-redux";
 //   isShopDataLoaded,
 // } from "../../redux/shop/shop.selectors";
 
-import { fetchShopCollectionsAsync } from "../../redux/shop/shop.actions";
+import { fetchShopDataProcessing } from "../../redux/shop/shop.actions";
+// import { fetchShopDataProcessing } from "../../redux/shop/shop.actions";
 
 import "./shoppage.styles.scss";
 import CollectionPreviewContainer from "../../components/collection-preview/collection-preview.container";
@@ -23,8 +24,8 @@ import CategoryCollection from "../../components/category/category.collection";
 
 class Shop extends React.Component {
   componentDidMount() {
-    const { fetchShopCollectionsAsync } = this.props;
-    fetchShopCollectionsAsync();
+    const { fetchShopDataProcessing } = this.props;
+    fetchShopDataProcessing();
   }
 
   render() {
@@ -61,7 +62,7 @@ class Shop extends React.Component {
  * function and we can then use the dispatch method to pass multiple dispatch methods in the same function at once!!!
  */
 const mapDispatchToProps = (dispatch) => ({
-  fetchShopCollectionsAsync: () => dispatch(fetchShopCollectionsAsync()),
+  fetchShopDataProcessing: () => dispatch(fetchShopDataProcessing()),
 });
 
 export default connect(null, mapDispatchToProps)(Shop);

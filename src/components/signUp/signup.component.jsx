@@ -1,9 +1,11 @@
 import React from "react";
 import FormInput from "../formInput/formInput.component";
 import CustomButton from "../customButton/customButton.component";
-import { auth, createUserDocDB } from "../../utils/firebase/firebase.utils";
+// import { auth, createUserDocDB } from "../../utils/firebase/firebase.utils";
 
 import "./signup.styles.scss";
+import { signUpStart } from "../../redux/users/users.actions";
+import { connect } from "react-redux";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class SignUp extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    const { signUpNewUser } = this.props;
     const { name, email, password, confirmPassword } = this.state;
 
     // check for password correction
@@ -28,17 +31,7 @@ class SignUp extends React.Component {
     }
 
     try {
-      // use firebase method to create a new user with email and password
-      const userObj = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      const { user } = userObj;
-
-      // the reason why we create a document over here and not let the onAuthStateChange method take care of it is because
-      // we want to set the displayName property which is by default set to null in the "user" object!!!
-      await createUserDocDB(user, { displayName: name });
+      signUpNewUser({ name, email, password });
 
       this.setState({
         name: "",
@@ -110,4 +103,8 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => ({
+  signUpNewUser: (user) => dispatch(signUpStart(user)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

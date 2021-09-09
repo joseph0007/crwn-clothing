@@ -1,21 +1,26 @@
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-import "./previewCollection.styles.scss";
+// import "./previewCollection.styles.scss";
 import CollectionItem from "../collectionItem/collectionItem.component";
+import {
+  PreviewCollectionStyled,
+  CollectionItemListStyled,
+  LinkStyled,
+} from "./previewCollection.styles";
 
 export const PreviewCollection = ({ title, items, match }) => (
-  <div className="collection-preview">
-    <Link className="title" to={`${match.url}/${title.toLowerCase()}`}>
+  <PreviewCollectionStyled>
+    <LinkStyled to={`${match.url}/${title.toLowerCase()}`}>
       {title.toUpperCase()}
-    </Link>
-    <div className="preview">
+    </LinkStyled>
+    <CollectionItemListStyled>
       {items
         .filter((el, ind) => ind < 4)
         .map((item) => (
           <CollectionItem key={item.id} item={item}></CollectionItem>
         ))}
-    </div>
-  </div>
+    </CollectionItemListStyled>
+  </PreviewCollectionStyled>
 );
 
 export default withRouter(PreviewCollection);
