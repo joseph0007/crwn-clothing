@@ -1,18 +1,26 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { withRouter } from "react-router-dom";
 
 import "./App.css";
-import { HomePage } from "./pages/homepage/homepage.page.jsx";
-import Shop from "./pages/shoppage/shoppage.page";
+// import { HomePage } from "./pages/homepage/homepage.page.jsx";
+// import Shop from "./pages/shoppage/shoppage.page";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/header/header.component";
-import SignInPage from "./pages/signpage/signpage.component";
-import CheckOut from "./pages/checkout/checkout.pages";
+// import SignInPage from "./pages/signpage/signpage.component";
+// import CheckOut from "./pages/checkout/checkout.pages";
 import { auth, createUserDocDB } from "./utils/firebase/firebase.utils";
 import { checkUserAuthStateStart } from "./redux/users/users.actions";
 import { selectCurrentUser } from "./redux/users/users.selectors";
+import Spinner from "./components/spinner/spinner.component";
+import ErrorBoundary from "./components/error-boundary/error-boundary.component";
+
+// lazy loading
+const HomePage = lazy(() => import("./pages/homepage/homepage.page.jsx"));
+const Shop = lazy(() => import("./pages/shoppage/shoppage.page"));
+const CheckOut = lazy(() => import("./pages/checkout/checkout.pages"));
+const SignInPage = lazy(() => import("./pages/signpage/signpage.component"));
 
 /**
  * a common issue with client side rendering was the issue of routing as opposed to server side rendering where we render the
@@ -67,20 +75,24 @@ class App extends React.Component {
         {/* <Header currentUser={this.state.currentUser} /> */}
         <Header />
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/shop" component={Shop} />
-          <Route exact path="/checkout" component={CheckOut} />
-          <Route
-            exact
-            path="/signin"
-            render={() =>
-              this.props.currentUser ? (
-                <Redirect to="/"></Redirect>
-              ) : (
-                <SignInPage />
-              )
-            }
-          />
+          <ErrorBoundary>
+            <Suspense fallback={<Spinner />}>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/shop" component={Shop} />
+              <Route exact path="/checkout" component={CheckOut} />
+              <Route
+                exact
+                path="/signin"
+                render={() =>
+                  this.props.currentUser ? (
+                    <Redirect to="/"></Redirect>
+                  ) : (
+                    <SignInPage />
+                  )
+                }
+              />
+            </Suspense>
+          </ErrorBoundary>
         </Switch>
       </div>
     );
