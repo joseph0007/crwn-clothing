@@ -5,7 +5,10 @@ const cors = require("cors");
 
 const app = express();
 
-if (process.env.NODE_ENV === "development") dotenv.config();
+if (process.env.NODE_ENV === "development")
+  dotenv.config({
+    path: `${__dirname}/.env`,
+  });
 
 app.use(cors());
 app.use(compression());
@@ -14,13 +17,15 @@ app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 5000;
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(`${__dirname}/client/build`));
+console.log(process.env.NODE_ENV);
 
-  app.get("*", (req, res) =>
-    res.sendFile(`${__dirname}/client/build/index.html`)
-  );
-}
+// if (process.env.NODE_ENV === "production") {
+app.use(express.static(`${__dirname}/client/build`));
+
+app.get("*", (req, res) =>
+  res.sendFile(`${__dirname}/client/build/index.html`)
+);
+// }
 
 app.listen(port, (error) => {
   if (error) console.log(error);
