@@ -21,7 +21,7 @@ import { userLogoutStart } from "../../redux/users/users.actions";
 const Header = ({ currentUser, cartVisibility, userLogout }) => (
   <HeaderContainer>
     <LogoContainer to="/">
-      <Logo className="logo" />
+      <Logo style={{ width: "100%", height: "100%" }} className="logo" />
     </LogoContainer>
 
     <OptionsContainer>

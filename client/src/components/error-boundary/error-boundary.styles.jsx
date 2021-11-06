@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ErrorImageOverlay = styled.div`
   height: 60vh;
@@ -19,6 +19,6 @@ export const ErrorImageContainer = styled.div`
 `;
 
 export const ErrorImageText = styled.h2`
-  font-size: 28px;
+  font-size: 2.8rem;
   color: #2f8e89;
 `;

@@ -1,12 +1,12 @@
 .card {
   min-width: 30%;
-  height: 240px;
+  height: 24rem;
   flex: 1 1 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid rgba(black, 0.1);
-  margin: 0 7.5px 15px;
+  margin: 0 0.75rem 1.5rem;
   overflow: hidden;
 
   &:hover {
@@ -14,16 +14,16 @@
   }
 
   &:first-child {
-    margin-right: 7.5px;
+    margin-right: 0.75rem;
   }
 
   &:last-child {
-    margin-left: 7.5px;
+    margin-left: 0.75rem;
   }
 
   &__content-box {
-    height: 90px;
-    padding: 0 25px;
+    // height: 90px;
+    padding: 3rem 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,6 +33,10 @@
     opacity: 0.9;
     background-color: #fff;
     text-transform: uppercase;
+
+    @media only screen and (max-width: 37.5em) {
+      padding: 2.5rem 1rem;
+    }
   }
 
   &__background {
@@ -50,19 +54,31 @@
 
   &__title {
     font-weight: bold;
-    margin-bottom: 6px;
-    font-size: 22px;
+    margin-bottom: 0.6rem;
+    font-size: 2.2rem;
     color: #4a4a4a;
+
+    @media only screen and (max-width: 37.5em) {
+      font-size: 1.6rem;
+    }
   }
 
   &__subtitle {
     font-weight: lighter;
-    font-size: 16px;
+    font-size: 1.6rem;
   }
 
   //maybe sass processes it as .card.card--large even thought the below selector is kinda inside the .card which indicates its a child
   //of .card!!! i guess sass is smart :)
   &.card--large {
-    height: 360px;
+    height: 36rem;
+
+    @media only screen and (max-width: 75em) {
+      height: 24rem;
+    }
+  }
+
+  @media only screen and (max-width: 20em) {
+    min-width: 40%;
   }
 }

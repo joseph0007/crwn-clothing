@@ -36,16 +36,17 @@ const currentStyle = (props) => {
 };
 
 export const CustomButtonContainer = styled.button`
-  min-width: 165px;
-  width: auto;
-  height: 50px;
+  // max-width: 16.5rem;
+  // height: 5rem;
   letter-spacing: 0.5px;
-  line-height: 50px;
-  padding: 0 35px 0 35px;
-  font-size: 15px;
+  padding: 1rem 3.5rem 1rem 3.5rem;
+  font-size: 1.5rem;
+  background-color: black;
+  color: white;
   text-transform: uppercase;
   font-family: "Open Sans Condensed";
   font-weight: bolder;
+  border: 1px solid transparent;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -55,4 +56,19 @@ export const CustomButtonContainer = styled.button`
   }
 
   ${currentStyle}
+
+  @media only screen and (max-width: 75em) {
+    padding: 1rem 1rem 1rem 1rem;
+    font-size: 1.3rem;
+  }
+
+  @media only screen and (max-width: 56.25em) {
+    padding: 1rem 1rem 1rem 1rem;
+    font-size: 1.2rem;
+  }
+
+  @media only screen and (max-width: 20em) {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    font-size: 1.2rem;
+  }
 `;

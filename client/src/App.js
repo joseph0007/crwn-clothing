@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { withRouter } from "react-router-dom";
 
-import "./App.css";
+// import "./App.css";
 // import { HomePage } from "./pages/homepage/homepage.page.jsx";
 // import Shop from "./pages/shoppage/shoppage.page";
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -15,6 +15,7 @@ import { checkUserAuthStateStart } from "./redux/users/users.actions";
 import { selectCurrentUser } from "./redux/users/users.selectors";
 import Spinner from "./components/spinner/spinner.component";
 import ErrorBoundary from "./components/error-boundary/error-boundary.component";
+import GlobalStyles from "./App.styles";
 
 // lazy loading
 const HomePage = lazy(() => import("./pages/homepage/homepage.page.jsx"));
@@ -70,6 +71,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <GlobalStyles />
         {/* {console.log(this.state.ref)} */}
         {/* {console.log(this.props)} */}
         {/* <Header currentUser={this.state.currentUser} /> */}

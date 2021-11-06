@@ -3,31 +3,43 @@ import { Link } from "react-router-dom";
 
 // css`arguments` ====> css(`arguments`)
 // const OptionGeneralStyles = css`
-//   padding: 10px 15px;
+//   padding: 10px 1.5rem;
 //   font-size: 1.5rem;
 //   text-transform: capitalize;
 // `;
 
 export const HeaderContainer = styled.header`
-  height: 70px;
+  // height: 70px;
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin-bottom: 2.5rem;
   position: relative;
+
+  @media only screen and (max-width: 20em) {
+    margin-bottom: 1rem;
+  } ;
 `;
 
 export const OptionLink = styled(Link)`
-  padding: 10px 15px;
+  padding: 1rem 1.5rem;
   font-size: 1.5rem;
   text-transform: capitalize;
 `;
 
 export const LogoContainer = styled(Link)`
-  //   height: 100%;
-  //   width: 70px;
-  //   padding: 25px;
   align-self: center;
+
+  @media only screen and (max-width: 37.5em) {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  @media only screen and (max-width: 37.5em) {
+    width: 6rem;
+    height: 6rem;
+  }
 `;
 
 export const OptionsContainer = styled.div`
