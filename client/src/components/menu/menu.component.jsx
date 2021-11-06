@@ -10,8 +10,8 @@ class Menu extends React.Component {
   render() {
     return (
       <div className="menu">
-        {this.props.directoryItems.map(({ id, ...el }) => {
-          return <Card key={id} {...el} />;
+        {this.props.directoryItems.map(({ id, ...el }, ind) => {
+          return <Card key={id} ind={ind} {...el} />;
         })}
       </div>
     );

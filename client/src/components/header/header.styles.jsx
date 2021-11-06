@@ -17,9 +17,13 @@ export const HeaderContainer = styled.header`
   margin-bottom: 2.5rem;
   position: relative;
 
+  @media only screen and (max-width: 56.25em) {
+    padding: 0 2rem;
+  }
+
   @media only screen and (max-width: 20em) {
     margin-bottom: 1rem;
-  } ;
+  }
 `;
 
 export const OptionLink = styled(Link)`

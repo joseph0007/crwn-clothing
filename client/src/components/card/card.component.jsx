@@ -1,12 +1,12 @@
 import { withRouter } from "react-router-dom";
 import "./card.styles.scss";
 
-const Card = ({ title, key, imageUrl, size, linkUrl, history, match }) => {
+const Card = ({ title, key, imageUrl, size, linkUrl, history, match, ind }) => {
   let newSize = size ? size : "";
   return (
     // <Link to={`${match.url}${linkUrl}`} />
     <div
-      className={`card ${newSize}`}
+      className={`card card-${ind + 1}${newSize ? ` ${newSize}` : ``}`}
       key={key}
       onClick={() => history.push(`${linkUrl}`)}
     >

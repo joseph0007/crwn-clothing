@@ -1,13 +1,61 @@
 .card {
-  min-width: 30%;
-  height: 24rem;
-  flex: 1 1 auto;
+  // min-width: 30%;
+  // height: 24rem;
+  // flex: 1 1 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid rgba(black, 0.1);
-  margin: 0 0.75rem 1.5rem;
+  // margin: 0 0.75rem 1.5rem;
   overflow: hidden;
+
+  &-1 {
+    grid-row: 1 / 2;
+    grid-column: col-start 1 / col-end 2;
+
+    @media only screen and (max-width: 56.25em) {
+      grid-column: col-start 1 / col-end 3;
+    }
+  }
+
+  &-2 {
+    grid-row: 1 / 2;
+    grid-column: col-start 3 / col-end 4;
+
+    @media only screen and (max-width: 56.25em) {
+      grid-column: col-start 4 / col-end -1;
+    }
+  }
+
+  &-3 {
+    grid-row: 1 / 2;
+    grid-column: col-start 5 / col-end 6;
+
+    @media only screen and (max-width: 56.25em) {
+      grid-row: 2 / 3;
+      grid-column: col-start 1 / col-end 3;
+    }
+  }
+
+  &-4 {
+    grid-row: 2 / 4;
+    grid-column: col-start 1 / col-end 3;
+
+    @media only screen and (max-width: 56.25em) {
+      grid-row: 2 / 3;
+      grid-column: col-start 4 / col-end -1;
+    }
+  }
+
+  &-5 {
+    grid-row: 2 / 4;
+    grid-column: col-start 4 / col-end 6;
+
+    @media only screen and (max-width: 56.25em) {
+      grid-row: 3 / 4;
+      grid-column: col-start 1 / col-end -1;
+    }
+  }
 
   &:hover {
     cursor: pointer;
@@ -23,7 +71,7 @@
 
   &__content-box {
     // height: 90px;
-    padding: 3rem 2.5rem;
+    padding: 1rem 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -70,15 +118,11 @@
 
   //maybe sass processes it as .card.card--large even thought the below selector is kinda inside the .card which indicates its a child
   //of .card!!! i guess sass is smart :)
-  &.card--large {
-    height: 36rem;
+  // &.card--large {
+  //   height: 36rem;
 
-    @media only screen and (max-width: 75em) {
-      height: 24rem;
-    }
-  }
-
-  @media only screen and (max-width: 20em) {
-    min-width: 40%;
-  }
+  //   @media only screen and (max-width: 75em) {
+  //     height: 24rem;
+  //   }
+  // }
 }
