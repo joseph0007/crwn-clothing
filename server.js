@@ -13,25 +13,29 @@ dotenv.config({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
+const host = process.env.HOST || '127.0.0.1';
 
 console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(cors());
   app.use(compression());
   // trust proto header is to trust the reverse proxy header
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
+  if( process.env.ENFORCE_HTTPS === true ) {
+    app.use(cors());
+    app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  }
 
   app.use(express.static(`${__dirname}/client/build`));
 
-  app.get("*", (req, res) =>
+  app.get("*", (req, res) => {
     res.sendFile(`${__dirname}/client/build/index.html`)
-  );
+  });
 }
 
-app.listen(port, (error) => {
+app.listen(port, host, (error) => {
   if (error) console.log(error);
 
-  console.log("server started!");
+  console.log(`server started! => ${host}:${port}`);
 });

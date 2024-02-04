@@ -4,7 +4,7 @@ import StripeCheckout from "react-stripe-checkout";
 const StripeCheckoutButton = ({ price }) => {
   const totalPriceInCents = price * 100;
   const pk =
-    "pk_test_51HdVPkGONLSY38qKTtDz91jbnvO12EAQ8yBI0BrZMD3xAbsvL2ChmTHT8k0hRrudfVBRJpDa8Fx6Q0qlTSB9fjo5003woFNwsG";
+    "pk_test_51HYVdEAWHvpqchAMSNz2jQVMTSpWPMHCl9niFAqYJRObbHEOkLRaOom5zZYQt7PnSbjmYFzhN9PviI6Aak3kRwnQ00P3gQXA0P";
 
   const onToken = (token) => {
     console.log(token);

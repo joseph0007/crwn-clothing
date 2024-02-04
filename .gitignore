@@ -22,6 +22,7 @@ client/.env.production.local
 client/npm-debug.log*
 client/yarn-debug.log*
 client/yarn-error.log*
+package-lock.json
 
 # production
 client/export_shop_data.js
